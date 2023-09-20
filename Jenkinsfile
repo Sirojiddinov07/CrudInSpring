@@ -1,29 +1,16 @@
+#!/usr/bin/env groovy
 pipeline {
     agent any
-
     stages {
-
-        stage('Checkout') {
+        stage('Stage 1'){
             steps {
-                git 'https://github.com/Sirojiddinov07/CrudInSpring.git'
+                echo 'Hello world!'
             }
         }
-
-        stage('Compile') {
+        stage('Stage 2'){
             steps {
-                bat 'mvn compile'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                bat 'mvn test'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                bat 'mvn install'
+                withSonarQubeEvn(installationName: "sonar-scanner")
+                bat "mvnw clean"
             }
         }
     }
