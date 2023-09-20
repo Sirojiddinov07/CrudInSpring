@@ -7,11 +7,20 @@ pipeline {
                 echo 'Hello world!'
             }
         }
-        stage('Stage 2'){
+        stage('Build') {
             steps {
-                withSonarQubeEvn(installationName: "sonar-scanner")
-                bat "mvnw clean"
+                // Build your project
+                bat 'mvnw clean install'
             }
         }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonar-scanner') {
+                    // Run SonarQube analysis
+                    bat 'sonar-scanner'
+                }
+            }
+        }
+        }
     }
-}
