@@ -54,20 +54,17 @@ public class StudentController {
 			@ModelAttribute("student") Student student,
 			Model model) {
 		
-		// get student from database by id
 		Student existingStudent = studentService.getStudentById(id);
 		existingStudent.setId(id);
 		existingStudent.setFirstName(student.getFirstName());
 		existingStudent.setLastName(student.getLastName());
 		existingStudent.setEmail(student.getEmail());
 		
-		// save updated student object
 		studentService.updateStudent(existingStudent);
 		return "redirect:/students";		
 	}
 	
-	// handler method to handle delete student request
-	
+
 	@GetMapping("/students/{id}")
 	public String deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudentById(id);
